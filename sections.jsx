@@ -1357,6 +1357,7 @@ function ThesisScrollUp({ video }) {
 
     function render() {
       const vh = window.innerHeight || 800;
+      const mobileNow = !!(window.matchMedia && window.matchMedia('(max-width: 720px)').matches);
       const seg = 1 / (N + 1);             // vertical spacing between successive lines (tighter → last line finishes rising before the implode)
       const RISE = 0.66 * vh;              // travel distance from centre to bottom edge
 
@@ -1410,7 +1411,11 @@ function ThesisScrollUp({ video }) {
           clamp01((CLOUD - yFrac) / IN),       // emerge above the clouds
           clamp01((yFrac - TOP) / OUT)         // then fade out gradually as the line rises up
         );
-        el.style.transform = `translate(-50%, calc(-50% + ${y.toFixed(1)}px))`;
+        // On mobile the words don't travel — they cross-fade pinned at a fixed spot
+        // above the skyline; on desktop they rise with the scroll.
+        el.style.transform = mobileNow
+          ? 'translate(-50%, calc(-140% + 0px))'
+          : `translate(-50%, calc(-50% + ${y.toFixed(1)}px))`;
         el.style.opacity = (o * layer).toFixed(3);
       });
     }
