@@ -836,9 +836,9 @@ a.card:hover .card-go .arw { transform: translateX(4px); }
   /* raise the opening thesis line up into the white space, clear of the tower antenna */
   .thesis-up .tu-lines .tu-line:first-child { top: 34%; }
 }
-/* mobile: the thesis skyline is zoomed OUT (whole image) so the tall tower is visible */
+/* mobile: the thesis skyline is zoomed/panned to frame the skyline on a narrow screen */
 @media (max-width: 720px) {
-  .tu-media { height: 58%; object-fit: cover; }
+  .tu-media { height: 59%; object-fit: cover; margin-left: -63%; width: 200%; }
 }
 @media (min-width: 941px) and (max-width: 1080px) {
   .card-grid { gap: 22px; }
@@ -868,7 +868,10 @@ a.card:hover .card-go .arw { transform: translateX(4px); }
           mask-image: linear-gradient(to top, #000 0%, #000 88%, transparent 100%);
 }
 @media (max-width: 720px) {
-  .cityfloor { height: min(62vw, 52vh); }
+  /* NOTE: opacity/visibility here are overridden by city.jsx's per-scroll inline
+     styles (the hero/footer bookend gating still runs) — the width/margin-left/height
+     are what actually reframe the skyline on mobile. */
+  .cityfloor { height: min(93vw, 52vh); opacity: 1; visibility: visible; width: 185%; margin-left: -46%; }
 }
 
 /* Blocks that must stay SOLID sit above the floor so the fading skyline can
@@ -902,4 +905,14 @@ a.card:hover .card-go .arw { transform: translateX(4px); }
 .fog-on .hero .btn-ghost:hover {
   border-color: var(--text);
   background: color-mix(in srgb, var(--bg) 80%, transparent);
+}
+
+/* mobile: ~50% tighter vertical spacing above/below paragraph text */
+@media (max-width: 720px) {
+  .hero-sub { margin-top: 17px; }        /* was 34 */
+  .hero-actions { margin-top: 22px; }    /* was 44 — the gap below the sub paragraph */
+  .founder p + p { margin-top: 8px; }    /* was 16 */
+  .about-body p + p { margin-top: 9px; } /* was 18 */
+  .thesis p + p { margin-top: 9px; }     /* was 18 */
+  .signup .lede { margin-top: 9px; }     /* was 18 */
 }
