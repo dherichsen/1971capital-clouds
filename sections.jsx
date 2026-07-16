@@ -1411,10 +1411,11 @@ function ThesisScrollUp({ video }) {
           clamp01((CLOUD - yFrac) / IN),       // emerge above the clouds
           clamp01((yFrac - TOP) / OUT)         // then fade out gradually as the line rises up
         );
-        // On mobile the words don't travel — they cross-fade pinned at a fixed spot
-        // above the skyline; on desktop they rise with the scroll.
+        // On mobile the words don't travel — they cross-fade pinned near the top.
+        // Anchor to the VIEWPORT (not each line's own height) so every line, long or
+        // short, top-aligns at the same spot in the upper third; desktop still rises.
         el.style.transform = mobileNow
-          ? 'translate(-50%, calc(-140% + 0px))'
+          ? 'translate(-50%, calc(-38vh))'
           : `translate(-50%, calc(-50% + ${y.toFixed(1)}px))`;
         el.style.opacity = (o * layer).toFixed(3);
       });
